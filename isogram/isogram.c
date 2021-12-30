@@ -1,37 +1,37 @@
 #include "isogram.h"
 
-int main(){
-   char test [] = "NICE";
-   int res = is_isogram(test);
-   printf("Isogram: %s",  res ? "True" : "False");
-}
+/* int main(){ */
+/*    char test [] = "why!"; */
+/*    int res = is_isogram(test); */
+/*    printf("Isogram: %s\n\n",  res ? "True" : "False"); */
+/* } */
+
+/* this solution was way better than mine so this is what I will submit */
+/* https://exercism.org/tracks/c/exercises/isogram/solutions/watsonmf */
+
+// this is used to convert all chars to lowercase
+# define ASCII_MASK 0x60
+
 bool is_isogram(const char phrase[]){
-   int len = strlen(phrase)+1;
-   char mem[len];
-   mem[0] = '\0';
-   for (const char *mem_str = *(&phrase); *mem_str; ++mem_str){
-      /* char test [] = "NICE DUDEEEEE"; */
+   if (phrase == NULL)
+      return false;
+   // 26 letters in alphabet, give me 32 bit unsigned ints
+   uint32_t letters = 0;
+   uint32_t mask;
 
-      /* mem: N, mem_str: NICE DUDEEEEE */
-      /* mem: NI, mem_str: ICE DUDEEEEE */
-      /* mem: NIC, mem_str: CE DUDEEEEE */
-      /* mem: NICE, mem_str: E DUDEEEEE */
-      /* mem: NICE , mem_str:  DUDEEEEE */
-      /* mem: NICE D, mem_str: DUDEEEEE */
-      /* mem: NICE DU, mem_str: UDEEEEE */
-      /* mem: NICE DUD, mem_str: DEEEEE */
-      /* mem: NICE DUDE, mem_str: EEEEE */
-      /* mem: NICE DUDEE, mem_str: EEEE */
-      /* mem: NICE DUDEEE, mem_str: EEE */
-      /* mem: NICE DUDEEEE, mem_str: EE */
-      /* mem: NICE DUDEEEEE, mem_str: E */
+   for (int i=0; phrase[i] != '\0'; i++){
+      if (isalpha(phrase[i])){
+         // bitwise or (phrase[i] | ASCII_MASK) converts ascii upper case chars to lowercase
+         // bitwise xor ^ ASCII_MASK removes the mask, a=1, B=2 ...
+         // turn on each each bit in the letters 32 bit to keep track of which letter have already been seen
+         mask = 1 << ((phrase[i] | ASCII_MASK) ^ ASCII_MASK);
+         /* printf("Mask: %08x, Letters: %08x\n", mask, letters); */
+         if (letters & mask)
+            return false;
+         else
+            letters |= mask;
+      }
 
-      // concat mem_str to mem;
-
-      printf("Result %s\n\n", strstr(mem, mem_str));
-      if(strstr(mem, mem_str)) return true;
-      printf("mem: %s, mem_str: %s\n", mem, mem_str);
-      snprintf(mem, sizeof(mem), "%s%c", mem, mem_str[0]);
    }
-   return false;
+   return true;
 }

@@ -35,3 +35,4 @@ clean:
 tests.out: ./*.c ./*.h
 	@echo Compiling $@
 	@$(CC) $(CFLAGS) test-framework/unity.c ./*.c -o tests.out $(LIBS)
+	# @$(CC) $(CFLAGS) ./*.c -o tests.out $(LIBS)
