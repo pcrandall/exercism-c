@@ -34,17 +34,8 @@
 
 /* More information on the color encoding of resistors can be found in the Electronic color code Wikipedia article */
 
-/* int main(){ */
-/*    /1* get len of arr *1/ */
-/*    /1* get val of each color *1/ */
-/*    /1* black black grn *1/ */
-/*    /1* 0 0 5 *1/ */
-/*    resistor_band_t tst = Red; */
-/*    printf("Band: %d\n\n",  tst); */
-/* } */
-
-int color_code(resistor_band_t bandssss){
-   return bandssss;
+int color_code(resistor_band_t band){
+   return band;
 }
 
 resistor_band_t *colors(){
